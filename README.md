@@ -1,20 +1,68 @@
 # Quantum Math Lab
 
-Quantum Math Lab is an educational project that combines a **simple quantum‑computing simulator** with an exploration of some of the most famous unsolved problems in mathematics.  The goal of this repository is two‑fold:
+Quantum Math Lab pairs a lightweight quantum circuit simulator with concise
+summaries of landmark unsolved problems in mathematics.  The project is designed
+for experimentation and self-study: you can build and inspect quantum states in
+pure Python while browsing short descriptions of famous conjectures.
 
-1. **Quantum Computing Simulation** – provide a minimal yet functional simulator for quantum circuits.  The code in `quantum_simulator.py` models a register of qubits using a complex state vector and implements a handful of basic gates (Hadamard, Pauli‑X and controlled‑NOT).  You can create circuits, apply gates and measure the qubits to observe the probabilistic outcomes associated with quantum mechanics.
-2. **Unsolved Mathematical Problems** – collect descriptions of ten open problems that continue to challenge mathematicians.  These descriptions, along with references to authoritative sources, are provided in `problems.md`.  The list includes the seven Clay Mathematics Institute (CMI) Millennium Prize Problems and a few other long‑standing conjectures from number theory and analysis.
+## Features
 
-## Why this project?
-
-Mathematics and quantum computing share a common theme: profound questions whose answers unlock entirely new possibilities.  While this project is purely **simulative** – nothing here can harness particles or energy in the physical world – it offers a platform for learning and experimentation.  The simulator illustrates key quantum concepts such as superposition and entanglement, and the problem summaries point readers toward some of the deepest unsolved questions in modern mathematics.
+- **State-vector simulator** implemented in [`quantum_simulator.py`](quantum_simulator.py)
+  with Hadamard, Pauli-X and controlled-NOT gates, custom unitaries and
+  measurement utilities.
+- **Problem compendium** in [`problems.md`](problems.md) covering ten influential
+  open problems such as the Riemann Hypothesis, P vs NP and the Navier–Stokes
+  regularity question.
+- **Automated tests** demonstrating the simulator’s behaviour, built with
+  `pytest`.
 
 ## Getting started
 
-1. **Clone this repository** and install the only required dependency (NumPy) with `pip install numpy`.
-2. **Explore `quantum_simulator.py`** – this module defines a `QuantumCircuit` class with methods to apply gates and perform measurements.  The included docstrings provide examples.
-3. **Read `problems.md`** – each section describes an unsolved problem and cites a primary source or well‑known reference for further reading.
+1. **Install dependencies**
+
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt  # see below if the file is absent
+   ```
+
+   If a `requirements.txt` file is not present, simply install NumPy and pytest:
+
+   ```bash
+   pip install numpy pytest
+   ```
+
+2. **Experiment with the simulator**
+
+   ```python
+   from quantum_simulator import QuantumCircuit
+
+   circuit = QuantumCircuit(2)
+   circuit.hadamard(0)
+   circuit.cnot(0, 1)
+   print(circuit.probabilities())  # {'00': 0.5, '11': 0.5}
+   result = circuit.measure(rng=np.random.default_rng())
+   print(result.counts)
+   ```
+
+3. **Review the unsolved problems** by opening [`problems.md`](problems.md) for
+   high-level summaries and references.
+
+## Running the tests
+
+Use `pytest` to execute the simulator tests:
+
+```bash
+pytest
+```
+
+The test suite verifies single-qubit gates, entanglement via the controlled-NOT
+operation and measurement statistics.
 
 ## Disclaimer
 
-This project does not attempt to solve any of the unsolved problems listed here.  It provides succinct descriptions for educational purposes and a simple code base for playing with quantum circuits.  For real‑world quantum computation, consider using established frameworks such as [Qiskit](https://qiskit.org/) or [Cirq](https://quantumai.google/cirq).
+This project does not attempt to solve the problems listed in `problems.md` and
+is not a substitute for full-featured quantum computing frameworks such as
+[Qiskit](https://qiskit.org/) or [Cirq](https://quantumai.google/cirq).  It is an
+educational sandbox for experimenting with qubit states and learning about open
+questions in mathematics.
