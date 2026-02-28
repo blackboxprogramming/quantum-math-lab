@@ -15,7 +15,7 @@ pure Python while browsing short descriptions of famous conjectures.
 ## Features
 
 - **State-vector simulator** implemented in [`quantum_simulator.py`](quantum_simulator.py)
-  with Hadamard, Pauli-X and controlled-NOT gates, custom unitaries and
+  with Hadamard, Pauli-X/Y/Z and controlled-NOT gates, custom unitaries and
   measurement utilities.
 - **Problem compendium** in [`problems.md`](problems.md) covering ten influential
   open problems such as the Riemann Hypothesis, P vs NP and the Navier–Stokes

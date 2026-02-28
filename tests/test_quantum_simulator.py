@@ -20,6 +20,24 @@ def test_pauli_x_flips_ground_state():
     assert probs["0"] == pytest.approx(0.0)
 
 
+def test_pauli_y_flips_state_with_phase():
+    circuit = QuantumCircuit(1)
+    circuit.pauli_y(0)
+    probs = circuit.probabilities()
+    assert probs["1"] == pytest.approx(1.0)
+    assert probs["0"] == pytest.approx(0.0)
+
+
+def test_pauli_z_adds_phase_without_changing_probabilities():
+    circuit = QuantumCircuit(1)
+    circuit.hadamard(0)
+    circuit.pauli_z(0)
+    circuit.hadamard(0)
+    probs = circuit.probabilities()
+    assert probs["1"] == pytest.approx(1.0)
+    assert probs["0"] == pytest.approx(0.0)
+
+
 def test_cnot_creates_bell_state():
     circuit = QuantumCircuit(2)
     circuit.hadamard(0)

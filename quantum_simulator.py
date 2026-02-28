@@ -112,6 +112,25 @@ class QuantumCircuit:
 
         self._apply_unitary(_X, (qubit,))
 
+    def pauli_y(self, qubit: int) -> None:
+        """Apply the Pauli-Y gate to ``qubit``.
+
+        The Pauli-Y gate flips the state of a single qubit while also applying a
+        relative phase factor of ``i``.  When acting on ``|0⟩`` the outcome is
+        ``i|1⟩`` and when acting on ``|1⟩`` the outcome is ``-i|0⟩``.
+        """
+
+        self._apply_unitary(_Y, (qubit,))
+
+    def pauli_z(self, qubit: int) -> None:
+        """Apply the Pauli-Z gate to ``qubit``.
+
+        The Pauli-Z gate leaves ``|0⟩`` unchanged and flips the phase of ``|1⟩``
+        by multiplying it with ``-1``.
+        """
+
+        self._apply_unitary(_Z, (qubit,))
+
     def cnot(self, control: int, target: int) -> None:
         """Apply a controlled-NOT operation.
 
@@ -279,6 +298,8 @@ def _distribution_from_probabilities(probabilities: np.ndarray, num_qubits: int)
 
 _H = np.array([[1, 1], [1, -1]], dtype=np.complex128) / np.sqrt(2)
 _X = np.array([[0, 1], [1, 0]], dtype=np.complex128)
+_Y = np.array([[0, -1j], [1j, 0]], dtype=np.complex128)
+_Z = np.array([[1, 0], [0, -1]], dtype=np.complex128)
 _CNOT = np.array(
     [
         [1, 0, 0, 0],
