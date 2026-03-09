@@ -1,75 +1,124 @@
-> ⚗️ **Research Repository**
->
-> This is an experimental/research repository. Code here is exploratory and not production-ready.
-> For production systems, see [BlackRoad-OS](https://github.com/BlackRoad-OS).
-
----
-
 # Quantum Math Lab
 
-Quantum Math Lab pairs a lightweight quantum circuit simulator with concise
-summaries of landmark unsolved problems in mathematics.  The project is designed
-for experimentation and self-study: you can build and inspect quantum states in
-pure Python while browsing short descriptions of famous conjectures.
+[![CI](https://github.com/blackboxprogramming/quantum-math-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/blackboxprogramming/quantum-math-lab/actions/workflows/ci.yml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB.svg)](https://python.org)
+[![License](https://img.shields.io/badge/license-Proprietary-9c27b0)](LICENSE)
 
-## Features
+Pure-Python quantum circuit simulator with a companion catalog of unsolved problems in mathematics.
 
-- **State-vector simulator** implemented in [`quantum_simulator.py`](quantum_simulator.py)
-  with Hadamard, Pauli-X and controlled-NOT gates, custom unitaries and
-  measurement utilities.
-- **Problem compendium** in [`problems.md`](problems.md) covering ten influential
-  open problems such as the Riemann Hypothesis, P vs NP and the Navier–Stokes
-  regularity question.
-- **Automated tests** demonstrating the simulator’s behaviour, built with
-  `pytest`.
+## Simulator
 
-## Getting started
+The `QuantumCircuit` class implements a state-vector simulator that stores the full 2^n complex amplitude vector and applies gates as matrix operations. No external quantum framework required — just NumPy.
 
-1. **Install dependencies**
+### Supported Gates
 
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt  # see below if the file is absent
-   ```
+| Gate | Method | Matrix |
+|------|--------|--------|
+| Hadamard | `hadamard(q)` | (1/sqrt(2)) [[1,1],[1,-1]] |
+| Pauli-X | `pauli_x(q)` | [[0,1],[1,0]] |
+| CNOT | `cnot(c, t)` | 4x4 controlled-NOT |
+| Custom | `apply_custom(U, qubits)` | Any unitary matrix |
 
-   If a `requirements.txt` file is not present, simply install NumPy and pytest:
-
-   ```bash
-   pip install numpy pytest
-   ```
-
-2. **Experiment with the simulator**
-
-   ```python
-   from quantum_simulator import QuantumCircuit
-
-   circuit = QuantumCircuit(2)
-   circuit.hadamard(0)
-   circuit.cnot(0, 1)
-   print(circuit.probabilities())  # {'00': 0.5, '11': 0.5}
-   result = circuit.measure(rng=np.random.default_rng())
-   print(result.counts)
-   ```
-
-3. **Review the unsolved problems** by opening [`problems.md`](problems.md) for
-   high-level summaries and references.
-
-## Running the tests
-
-Use `pytest` to execute the simulator tests:
+### Quick Start
 
 ```bash
-pytest
+pip install numpy
 ```
 
-The test suite verifies single-qubit gates, entanglement via the controlled-NOT
-operation and measurement statistics.
+```python
+from quantum_simulator import QuantumCircuit
+import numpy as np
 
-## Disclaimer
+# Create a Bell state: (|00> + |11>) / sqrt(2)
+circuit = QuantumCircuit(2)
+circuit.hadamard(0)
+circuit.cnot(0, 1)
 
-This project does not attempt to solve the problems listed in `problems.md` and
-is not a substitute for full-featured quantum computing frameworks such as
-[Qiskit](https://qiskit.org/) or [Cirq](https://quantumai.google/cirq).  It is an
-educational sandbox for experimenting with qubit states and learning about open
-questions in mathematics.
+print(circuit.probabilities())
+# {'00': 0.5, '01': 0.0, '10': 0.0, '11': 0.5}
+
+result = circuit.measure(shots=1000, rng=np.random.default_rng(42))
+print(result.counts)
+# {'00': 494, '01': 0, '10': 0, '11': 506}
+```
+
+### 3-Qubit GHZ State
+
+```python
+circuit = QuantumCircuit(3)
+circuit.hadamard(0)
+circuit.cnot(0, 1)
+circuit.cnot(0, 2)
+# |000> + |111> with equal probability, all other states zero
+```
+
+### Custom Unitaries
+
+```python
+# Pauli-Z gate
+Z = np.array([[1, 0], [0, -1]], dtype=complex)
+circuit = QuantumCircuit(1)
+circuit.apply_custom(Z, [0])
+
+# SWAP gate
+SWAP = np.array([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,1]], dtype=complex)
+circuit = QuantumCircuit(2)
+circuit.apply_custom(SWAP, [0, 1])
+```
+
+## Architecture
+
+```
+QuantumCircuit(n)
+  |
+  |-- _state: np.ndarray[complex128]   # 2^n amplitude vector
+  |-- hadamard(q) / pauli_x(q)         # Single-qubit gates
+  |-- cnot(c, t)                        # Two-qubit gate
+  |-- apply_custom(U, qubits)           # Arbitrary unitary
+  |-- probabilities(qubits?)            # |amplitude|^2 distribution
+  |-- measure(qubits?, shots, rng)      # Sample + collapse
+       |
+       +-- MeasurementResult
+             |-- counts: {bitstring: int}
+             |-- most_likely() -> str
+             |-- total_shots() -> int
+```
+
+State is stored as a dense vector reshaped into a tensor for gate application via permutation and matrix multiplication. Measurement collapses the state vector by projecting onto the observed subspace and renormalizing.
+
+## Unsolved Problems
+
+[`problems.md`](problems.md) covers ten influential open problems:
+
+1. Riemann Hypothesis
+2. P vs NP
+3. Navier-Stokes regularity
+4. Hodge Conjecture
+5. Yang-Mills mass gap
+6. Birch and Swinnerton-Dyer
+7. Goldbach's Conjecture
+8. Twin Prime Conjecture
+9. Collatz Conjecture
+10. abc Conjecture
+
+Each entry includes a problem statement, known progress, and references.
+
+## Development
+
+```bash
+# Install
+pip install -r requirements.txt
+
+# Run tests (35+ tests)
+make test
+
+# Lint
+make lint
+
+# Coverage report
+make coverage
+```
+
+## License
+
+Proprietary — BlackRoad OS, Inc. See [LICENSE](LICENSE).
