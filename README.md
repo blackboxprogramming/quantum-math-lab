@@ -1,94 +1,101 @@
-> ⚗️ **Research Repository**
->
-> This is an experimental/research repository. Code here is exploratory and not production-ready.
-> For production systems, see [BlackRoad-OS](https://github.com/BlackRoad-OS).
+# Quantum Framework
 
----
+**Circuits, not slides. Real quantum computing.**
 
-# Quantum Math Lab
-
-Quantum Math Lab pairs a lightweight quantum circuit simulator with concise
-summaries of landmark unsolved problems in mathematics.  The project is designed
-for experimentation and self-study: you can build and inspect quantum states in
-pure Python while browsing short descriptions of famous conjectures.
+A state-vector quantum circuit simulator with implementations of fundamental quantum algorithms, unsolved math problem compendium, and experimental emergence research. Built in Python with NumPy.
 
 ## Features
 
-- **State-vector simulator** implemented in [`quantum_simulator.py`](quantum_simulator.py)
-  with Hadamard, Pauli-X/Y/Z and controlled-NOT gates, custom unitaries and
-  measurement utilities.
-- **Problem compendium** in [`problems.md`](problems.md) covering ten influential
-  open problems such as the Riemann Hypothesis, P vs NP and the Navier–Stokes
-  regularity question.
-- **Automated tests** demonstrating the simulator’s behaviour, built with
-  `pytest`.
+- **State-Vector Simulator** — Dense complex NumPy arrays. Hadamard, Pauli-X/Y/Z, CNOT gates, custom unitaries, measurement with collapse.
+- **Bell States** — Create and measure entangled qubit pairs.
+- **Probability Distributions** — Inspect full probability distributions for any subset of qubits at any point.
+- **Measurement** — Projective measurement with state collapse, configurable RNG for reproducibility.
+- **Problem Compendium** — 10 landmark unsolved problems: Riemann Hypothesis, P vs NP, Navier-Stokes, and more.
+- **Emergence Research** — Experimental trinary and emergence simulations in the lab.
+- **Automated Tests** — Full pytest suite verifying simulator behavior.
 
-## Getting started
-
-1. **Install dependencies**
-
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt  # see below if the file is absent
-   ```
-
-   If a `requirements.txt` file is not present, simply install NumPy and pytest:
-
-   ```bash
-   pip install numpy pytest
-   ```
-
-2. **Experiment with the simulator**
-
-   ```python
-   from quantum_simulator import QuantumCircuit
-
-   circuit = QuantumCircuit(2)
-   circuit.hadamard(0)
-   circuit.cnot(0, 1)
-   print(circuit.probabilities())  # {'00': 0.5, '11': 0.5}
-   result = circuit.measure(rng=np.random.default_rng())
-   print(result.counts)
-   ```
-
-3. **Review the unsolved problems** by opening [`problems.md`](problems.md) for
-   high-level summaries and references.
-
-## Running the tests
-
-Use `pytest` to execute the simulator tests:
+## Quickstart
 
 ```bash
-pytest
+git clone https://github.com/blackboxprogramming/quantum-math-lab.git
+cd quantum-math-lab
+pip install -r requirements.txt
+
+# Run the simulator
+python -c "
+from quantum_simulator import QuantumCircuit
+import numpy as np
+
+# Create a Bell state
+qc = QuantumCircuit(2)
+qc.hadamard(0)
+qc.cnot(0, 1)
+print(qc.measure(rng=np.random.default_rng(42)))
+"
+
+# Run tests
+pytest tests/
 ```
 
-The test suite verifies single-qubit gates, entanglement via the controlled-NOT
-operation and measurement statistics.
+## Simulator API
 
-## Disclaimer
+```python
+from quantum_simulator import QuantumCircuit
+import numpy as np
 
-This project does not attempt to solve the problems listed in `problems.md` and
-is not a substitute for full-featured quantum computing frameworks such as
-[Qiskit](https://qiskit.org/) or [Cirq](https://quantumai.google/cirq).  It is an
-educational sandbox for experimenting with qubit states and learning about open
-questions in mathematics.
+qc = QuantumCircuit(3)       # 3-qubit register
 
----
+# Gates
+qc.hadamard(0)               # Hadamard on qubit 0
+qc.pauli_x(1)                # Pauli-X (NOT) on qubit 1
+qc.pauli_y(2)                # Pauli-Y on qubit 2
+qc.pauli_z(0)                # Pauli-Z on qubit 0
+qc.cnot(0, 1)                # CNOT: control=0, target=1
 
-## 📜 License & Copyright
+# Inspect
+probs = qc.probabilities()   # Full probability distribution
+result = qc.measure()         # Measure with collapse
+```
 
-**Copyright © 2026 BlackRoad OS, Inc. All Rights Reserved.**
+## Project Structure
 
-**CEO:** Alexa Amundson | **PROPRIETARY AND CONFIDENTIAL**
+```
+quantum-math-lab/
+├── quantum_simulator.py     # Core simulator: QuantumCircuit class
+├── problems.md              # 10 unsolved math problems
+├── requirements.txt         # numpy, pytest
+├── lab/
+│   ├── emergence.py         # Emergence simulation experiments
+│   └── trinary_extended.py  # Trinary computing extensions
+└── tests/
+    ├── conftest.py
+    └── test_quantum_simulator.py
+```
 
-This software is NOT for commercial resale. Testing purposes only.
+## Unsolved Problems Covered
 
-### 🏢 Enterprise Scale:
-- 30,000 AI Agents
-- 30,000 Human Employees
-- CEO: Alexa Amundson
+1. Riemann Hypothesis
+2. P vs NP
+3. Navier-Stokes Regularity
+4. Birch and Swinnerton-Dyer Conjecture
+5. Hodge Conjecture
+6. Yang-Mills Existence and Mass Gap
+7. Goldbach's Conjecture
+8. Twin Prime Conjecture
+9. Collatz Conjecture
+10. ABC Conjecture
 
-**Contact:** blackroad.systems@gmail.com
+## Related Projects
 
-See [LICENSE](LICENSE) for complete terms.
+- **[Simulation Theory](https://github.com/blackboxprogramming/simulation-theory)** — SHA-256 hash chains and computational reality
+- **[Native AI Quantum Energy](https://github.com/blackboxprogramming/native-ai-quantum-energy)** — AI quantum computing and energy simulation
+- **[BlackRoad OS](https://github.com/blackboxprogramming/BlackRoad-Operating-System)** — The operating system for governed AI
+
+## Live Tools
+
+- **[circuits.blackroad.io](https://circuits.blackroad.io)** — Visual circuit designer
+- **[simulator.blackroad.io](https://simulator.blackroad.io)** — Browser-based quantum simulator
+
+## License
+
+Copyright 2026 BlackRoad OS, Inc. — Alexa Amundson. All rights reserved.
