@@ -25,7 +25,7 @@ probability distribution for a subset of qubits.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Mapping, Optional, Sequence
+from typing import Dict, Mapping, Optional, Sequence
 
 import numpy as np
 
@@ -53,7 +53,8 @@ class MeasurementResult:
             returning the lexicographically smallest string.
         """
 
-        return max(self.counts.items(), key=lambda item: (item[1], item[0]))[0]
+        best_count = max(self.counts.values())
+        return min(k for k, v in self.counts.items() if v == best_count)
 
     def total_shots(self) -> int:
         """Return the total number of measurement shots."""
