@@ -122,3 +122,11 @@ make coverage
 ## License
 
 Proprietary — BlackRoad OS, Inc. See [LICENSE](LICENSE).
+
+## Related Projects
+
+| Project | Description |
+|---------|-------------|
+| [Universal Computer](https://github.com/blackboxprogramming/universal-computer) | Turing machine simulator |
+| [Simulation Theory](https://github.com/blackboxprogramming/simulation-theory) | Physics and universe simulation |
+| [RoadC](https://github.com/blackboxprogramming/roadc) | Custom programming language |
