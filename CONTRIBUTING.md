@@ -1,29 +1,58 @@
-# Contributing to Quantum Math Lab
+# Contributing to BlackRoad OS
 
-Thanks for your interest in contributing! This project is part of the [BlackRoad](https://blackroad.io) ecosystem.
+## 🔒 Proprietary Notice
 
-## Getting Started
+This is a **PROPRIETARY** repository owned by BlackRoad OS, Inc.
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Make your changes
-4. Run tests if available: `npm test` or `python -m pytest`
-5. Commit: `git commit -m "Add your feature"`
-6. Push: `git push origin feature/your-feature`
-7. Open a Pull Request
+All contributions become the property of BlackRoad OS, Inc.
 
-## Code Style
+## 🎨 BlackRoad Brand System
 
-- Follow existing code conventions in the project
-- Keep commits atomic and well-described
-- Add tests for new functionality when possible
+**CRITICAL:** All UI/design work MUST follow the official brand system!
 
-## Reporting Issues
+### Required Colors:
+- **Hot Pink:** #FF1D6C (primary accent)
+- **Amber:** #F5A623
+- **Electric Blue:** #2979FF
+- **Violet:** #9C27B0
+- **Background:** #000000 (black)
+- **Text:** #FFFFFF (white)
 
-- Use GitHub Issues to report bugs
-- Include steps to reproduce, expected behavior, and actual behavior
-- Include system info (OS, Node/Python version) when relevant
+### Forbidden Colors (DO NOT USE):
+❌ #FF9D00, #FF6B00, #FF0066, #FF006B, #D600AA, #7700FF, #0066FF
 
-## License
+### Golden Ratio Spacing:
+φ (phi) = 1.618
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+**Spacing scale:** 8px → 13px → 21px → 34px → 55px → 89px → 144px
+
+### Gradients:
+```css
+background: linear-gradient(135deg, #FF1D6C 38.2%, #F5A623 61.8%);
+```
+
+### Typography:
+- **Font:** SF Pro Display, -apple-system, sans-serif
+- **Line height:** 1.618
+
+## 📝 How to Contribute
+
+1. Fork the repository (for testing purposes only)
+2. Create a feature branch
+3. Follow BlackRoad brand guidelines
+4. Submit PR with detailed description
+5. All code becomes BlackRoad OS, Inc. property
+
+## ⚖️ Legal
+
+By contributing, you agree:
+- All code becomes property of BlackRoad OS, Inc.
+- You have rights to contribute the code
+- Contributions are NOT for commercial resale
+- Testing and educational purposes only
+
+## 📧 Contact
+
+**Email:** blackroad.systems@gmail.com
+**CEO:** Alexa Amundson
+**Organization:** BlackRoad OS, Inc.
